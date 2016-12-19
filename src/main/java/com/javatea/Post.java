@@ -1,22 +1,25 @@
 package com.javatea;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Post")
 public class Post {
 	@Id
-	private int postId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long postId;
 
 	private String content;
 	private double locationX;
 	private double locationY;
+	private Date postDate;
 
-	public int getPostId() {
+	public long getPostId() {
 		return postId;
 	}
 
-	public void setPostId(int postId) {
+	public void setPostId(long postId) {
 		this.postId = postId;
 	}
 
@@ -42,5 +45,13 @@ public class Post {
 
 	public void setLocationY(double locationY) {
 		this.locationY = locationY;
+	}
+
+	public Date getPostDate() {
+		return postDate;
+	}
+
+	public void setPostDate(Date postDate) {
+		this.postDate = postDate;
 	}
 }
