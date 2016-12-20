@@ -4,11 +4,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Post")
-public class Post {
+@Table(name = "Article")
+public class Article {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long postId;
+
+	@ManyToOne
+	private User user;
 
 	private String content;
 	private double locationX;
@@ -53,5 +56,13 @@ public class Post {
 
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
