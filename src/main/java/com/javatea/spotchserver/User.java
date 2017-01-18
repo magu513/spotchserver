@@ -1,20 +1,32 @@
-package com.javatea;
+package com.javatea.spotchserver;
 
-
-import javax.persistence.*;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-@Entity
-@Table(name = "User")
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
+
+	private List<Article> articles;
 
 	private String userName;
 	private String email;
 	private Date birthDate;
 	private Date registerDate;
+
+	private byte status;
+
+	public User(long userId,
+				String userName,
+				String email,
+				Date birthDate,
+				Date registerDate) {
+		this.userId = userId;
+		this.userName = userName;
+		this.email = email;
+		this.birthDate = birthDate;
+		this.registerDate = registerDate;
+	}
 
 	public long getUserId() {
 		return userId;
@@ -54,5 +66,13 @@ public class User {
 
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
+	}
+
+	public Iterator<Article> getArticles() {
+		return articles.iterator();
+	}
+
+	public void addArticles(Article article) {
+		articles.add(article);
 	}
 }

@@ -1,4 +1,4 @@
-package com.javatea;
+package com.javatea.spotchserver;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
