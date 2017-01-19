@@ -1,7 +1,12 @@
 package com.javatea.spotchserver.controller;
 
-/**
- * Created by ShoyaYamaguchi on 2017/01/18.
- */
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
 public class UserController {
+	@RequestMapping("/")
+	public void signIn() {
+
+	}
 }
