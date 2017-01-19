@@ -28,6 +28,14 @@ public class User {
 		this.registerDate = registerDate;
 	}
 
+	public User (String userName,
+				 String email,
+				 Date birthDate) {
+		this.userName = userName;
+		this.email = email;
+		this.birthDate = birthDate;
+	}
+
 	public long getUserId() {
 		return userId;
 	}
