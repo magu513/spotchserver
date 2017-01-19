@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class ArticleController {
 	@Autowired
-	ArticleDao ad;
+	private ArticleDao ad;
 
 	@RequestMapping(value = "/articles", method = RequestMethod.GET)
 	public List<Article> read(@RequestParam double x,
@@ -31,6 +31,7 @@ public class ArticleController {
 
 		/*
 		TODO ユーザの認証の処理を行う
+		TODO SQLインジェクション対策
 		 */
 		HttpStatus status;
 		try {

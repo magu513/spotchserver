@@ -5,7 +5,12 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
@@ -109,18 +114,19 @@ public class ArticleDao implements Dao<Article> {
 
 	@Override
 	public void insert(Article object) throws SQLException {
-		String sql = "INSERT INTO article(userid,content,point,postdate) VALUES ("
-				+ object.getUserId()
-				+ ",'" + object.getContent() + "'"
-				+ ",ST_GeomFromText('POINT("
-				+ BigDecimal.valueOf(object.getLocationX()).toPlainString() + " "
-				+ BigDecimal.valueOf(object.getLocationY()).toPlainString()
-				+ ")',4326),"
-				+ "'" + object.getPostDate() + "')";
+		String sql = "INSERT INTO article(userid,content,point,postdate) ";
+		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
 
-		System.out.println(sql);
 		try {
 			PreparedStatement ps = CONNECTOR.getStatement(sql);
+			ps.setLong(1,object.getUserId());
+			ps.setString(2,object.getContent());
+			ps.setString(3,"POINT("+object.getLocationX()+" "+object.getLocationY()+")");
+
+			String datestr = object.getPostDate();
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(DateFormat.getDateInstance().parse(datestr.replaceAll("-","/")));
+			ps.setDate(4,new java.sql.Date(cal.getTimeInMillis()));
 			ps.executeUpdate();
 			CONNECTOR.commit();
 		} catch (SQLException e) {
@@ -132,6 +138,8 @@ public class ArticleDao implements Dao<Article> {
 			}
 
 			throw new SQLException();
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 	}
 }
