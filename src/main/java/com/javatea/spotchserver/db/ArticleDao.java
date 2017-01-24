@@ -21,10 +21,11 @@ public class ArticleDao implements Dao<Article> {
 		List<Article> list = new ArrayList<>();
 		try {
 			String sql = "SELECT articleid,userid,content,ST_AsText(point) AS location,postdate ";
-			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText('POINT(";
-			sql += BigDecimal.valueOf(x) + " " + BigDecimal.valueOf(y) + ")'),"+range+")";
-			PreparedStatement stmt = CONNECTOR.getStatement(sql);
+			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?)";
 
+			PreparedStatement stmt = CONNECTOR.getStatement(sql);
+			stmt.setString(1,"POINT("+x+" "+y+")");
+			stmt.setDouble(2,range);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
