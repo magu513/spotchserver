@@ -19,6 +19,6 @@ public class UserController {
 	public void signIn(@RequestParam String username,
 					   @RequestParam String email,
 					   @RequestParam Date birthday) {
-
+		User u = new User(username,email,birthday);
 	}
 }
