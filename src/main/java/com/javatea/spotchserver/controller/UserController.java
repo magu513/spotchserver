@@ -12,13 +12,17 @@ import java.util.Date;
 
 @Controller
 public class UserController {
+	/*
+	TODO HTTPSでの通信
+	 */
 	@Autowired
 	private UserDao ud;
 
 	@RequestMapping(value = "/",method = RequestMethod.POST)
 	public void signIn(@RequestParam String username,
 					   @RequestParam String email,
-					   @RequestParam Date birthday) {
+					   @RequestParam Date birthday,
+					   @RequestParam String password) {
 		User u = new User(username,email,birthday);
 	}
 }
