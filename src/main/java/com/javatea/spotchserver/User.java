@@ -64,8 +64,8 @@ public class User {
 		return createAt;
 	}
 
-	public void setCreateAt(Date registerDate) {
-		this.createAt = registerDate;
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
 	}
 
 	public Iterator<Article> getArticles() {
