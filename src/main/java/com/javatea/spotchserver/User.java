@@ -12,7 +12,7 @@ public class User {
 	private String userName;
 	private String email;
 	private Date birthDate;
-	private Date registerDate;
+	private Date createAt;
 
 	private byte status;
 
@@ -20,12 +20,12 @@ public class User {
 				String userName,
 				String email,
 				Date birthDate,
-				Date registerDate) {
+				Date createAt) {
 		this.userId = userId;
 		this.userName = userName;
 		this.email = email;
 		this.birthDate = birthDate;
-		this.registerDate = registerDate;
+		this.createAt = createAt;
 	}
 
 	public User (String userName,
@@ -68,12 +68,12 @@ public class User {
 		this.birthDate = birthDate;
 	}
 
-	public Date getRegisterDate() {
-		return registerDate;
+	public Date getCreateAt() {
+		return createAt;
 	}
 
-	public void setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
 	}
 
 	public Iterator<Article> getArticles() {

@@ -12,13 +12,13 @@ public class Article {
 	private double locationY;
 
 	private String content;
-	private String postDate;
+	private String createAt;
 
 	public Article(long postId,
 				   long userId,
 				   String location,
 				   String content,
-				   String postDate) {
+				   String createAt) {
 
 		this.postId = postId;
 		this.userId = userId;
@@ -30,7 +30,7 @@ public class Article {
 		this.locationY = Double.parseDouble(tmp[1]);
 
 		this.content = content;
-		this.postDate = postDate;
+		this.createAt = createAt;
 	}
 
 	public Article (long userId,
@@ -43,7 +43,7 @@ public class Article {
 		this.content = content;
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
-		this.postDate = sdf.format(c.getTime());
+		this.createAt = sdf.format(c.getTime());
 	}
 
 	public long getPostId() {
@@ -62,12 +62,12 @@ public class Article {
 		this.content = content;
 	}
 
-	public String getPostDate() {
-		return postDate;
+	public String getCreateAt() {
+		return createAt;
 	}
 
-	public void setPostDate(String postDate) {
-		this.postDate = postDate;
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
 	}
 
 	public long getUserId() {

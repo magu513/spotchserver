@@ -28,9 +28,9 @@ public class UserDao implements Dao<User> {
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				Date birthday = rs.getDate("birthday");
-				Date registerday = rs.getDate("registerday");
+				Date createAt = rs.getDate("create_at");
 
-				list.add(new User(id,name,email,birthday,registerday));
+				list.add(new User(id,name,email,birthday,createAt));
 			}
 
 		} catch (SQLException e) {
@@ -59,7 +59,7 @@ public class UserDao implements Dao<User> {
 			ps.setString(1, object.getUserName());
 			ps.setString(2, object.getEmail());
 			ps.setDate(3, (java.sql.Date) object.getBirthDate());
-			ps.setDate(4, (java.sql.Date) object.getRegisterDate());
+			ps.setDate(4, (java.sql.Date) object.getCreateAt());
 
 			ps.executeUpdate();
 			conn.commit();
