@@ -3,11 +3,9 @@ package com.javatea.spotchserver.db;
 import com.javatea.spotchserver.Article;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -20,7 +18,7 @@ public class ArticleDao implements Dao<Article> {
 											 double range) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,postdate ";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,create_at ";
 			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?)";
 
 			PreparedStatement stmt = CONNECTOR.getStatement(sql);
@@ -33,9 +31,9 @@ public class ArticleDao implements Dao<Article> {
 				long userId = rs.getLong("user_id");
 				String content = rs.getString("content");
 				String location = rs.getString("location");
-				String postDate = rs.getString("postdate");
+				String createAt = rs.getString("create_at");
 
-				list.add(new Article(articleId, userId, location, content, postDate));
+				list.add(new Article(articleId, userId, location, content, createAt));
 			}
 			rs.close();
 			stmt.close();
@@ -48,7 +46,7 @@ public class ArticleDao implements Dao<Article> {
 	public List<Article> findByUserId(long userId) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,postdate ";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,create_at ";
 			sql += "FROM article WHERE user_id = ?";
 
 			PreparedStatement stmt = CONNECTOR.getStatement(sql);
@@ -59,8 +57,8 @@ public class ArticleDao implements Dao<Article> {
 				long articleId = rs.getLong("article_id");
 				String content = rs.getString("content");
 				String location = rs.getString("point");
-				String postdate = rs.getString("postdate");
-				list.add(new Article(articleId, userId, location, content, postdate));
+				String createAt = rs.getString("create_at");
+				list.add(new Article(articleId, userId, location, content, createAt));
 			}
 
 			rs.close();
@@ -115,7 +113,7 @@ public class ArticleDao implements Dao<Article> {
 
 	@Override
 	public void insert(Article object) throws SQLException {
-		String sql = "INSERT INTO article(user_id,content,point,postdate) ";
+		String sql = "INSERT INTO article(user_id,content,point,create_at) ";
 		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
 
 		try {
@@ -124,7 +122,7 @@ public class ArticleDao implements Dao<Article> {
 			ps.setString(2,object.getContent());
 			ps.setString(3,"POINT("+object.getLocationX()+" "+object.getLocationY()+")");
 
-			String datestr = object.getPostDate();
+			String datestr = object.getCreateAt();
 			Calendar cal = new GregorianCalendar();
 			cal.setTime(DateFormat.getDateInstance().parse(datestr.replaceAll("-","/")));
 			ps.setDate(4,new java.sql.Date(cal.getTimeInMillis()));
