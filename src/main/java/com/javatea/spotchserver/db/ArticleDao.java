@@ -20,7 +20,7 @@ public class ArticleDao implements Dao<Article> {
 											 double range) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT articleid,userid,content,ST_AsText(point) AS location,postdate ";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,postdate ";
 			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?)";
 
 			PreparedStatement stmt = CONNECTOR.getStatement(sql);
@@ -29,8 +29,8 @@ public class ArticleDao implements Dao<Article> {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				long articleId = rs.getLong("articleid");
-				long userId = rs.getLong("userid");
+				long articleId = rs.getLong("article_id");
+				long userId = rs.getLong("user_id");
 				String content = rs.getString("content");
 				String location = rs.getString("location");
 				String postDate = rs.getString("postdate");
@@ -48,15 +48,15 @@ public class ArticleDao implements Dao<Article> {
 	public List<Article> findByUserId(long userId) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT articleid,userid,content,ST_AsText(point) AS point,postdate ";
-			sql += "FROM article WHERE userid = ?";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,postdate ";
+			sql += "FROM article WHERE user_id = ?";
 
 			PreparedStatement stmt = CONNECTOR.getStatement(sql);
 			stmt.setLong(1, userId);
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				long articleId = rs.getLong("artcleid");
+				long articleId = rs.getLong("article_id");
 				String content = rs.getString("content");
 				String location = rs.getString("point");
 				String postdate = rs.getString("postdate");
@@ -93,7 +93,7 @@ public class ArticleDao implements Dao<Article> {
 	}
 
 	public void delete(long id) throws SQLException {
-		String sql = "DELETE FROM article where articleid = ?";
+		String sql = "DELETE FROM article where article_id = ?";
 		PreparedStatement ps = null;
 		try {
 			ps = CONNECTOR.getStatement(sql);
@@ -115,7 +115,7 @@ public class ArticleDao implements Dao<Article> {
 
 	@Override
 	public void insert(Article object) throws SQLException {
-		String sql = "INSERT INTO article(userid,content,point,postdate) ";
+		String sql = "INSERT INTO article(user_id,content,point,postdate) ";
 		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
 
 		try {
