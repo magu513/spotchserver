@@ -33,6 +33,20 @@ public class User {
 	public User() {}
 
 	/**
+	 * 仮登録時に呼ばれる
+	 * @param userName
+	 * @param email
+	 * @param birthDate
+	 */
+	public User(String userName,
+				String email,
+				Date birthDate) {
+		this.userName = userName;
+		this.email = email;
+		this.birthDate = birthDate;
+	}
+
+	/**
 	 * データを設定する
 	 * @param userId
 	 * @param userName
@@ -45,7 +59,7 @@ public class User {
 				String email,
 				Date birthDate,
 				Date createAt,
-				int status) {
+				short status) {
 		this.userId = userId;
 		this.userName = userName;
 		this.email = email;
