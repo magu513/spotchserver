@@ -18,7 +18,7 @@ public class ArticleDao implements Dao<Article> {
 											 double range) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,create_at ";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,created_at ";
 			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?)";
 
 			PreparedStatement stmt = CONNECTOR.getStatement(sql);
@@ -31,7 +31,7 @@ public class ArticleDao implements Dao<Article> {
 				long userId = rs.getLong("user_id");
 				String content = rs.getString("content");
 				String location = rs.getString("location");
-				String createAt = rs.getString("create_at");
+				String createAt = rs.getString("created_at");
 
 				list.add(new Article(articleId, userId, location, content, createAt));
 			}
@@ -46,7 +46,7 @@ public class ArticleDao implements Dao<Article> {
 	public List<Article> findByUserId(long userId) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,create_at ";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,created_at ";
 			sql += "FROM article WHERE user_id = ?";
 
 			PreparedStatement stmt = CONNECTOR.getStatement(sql);
@@ -57,7 +57,7 @@ public class ArticleDao implements Dao<Article> {
 				long articleId = rs.getLong("article_id");
 				String content = rs.getString("content");
 				String location = rs.getString("point");
-				String createAt = rs.getString("create_at");
+				String createAt = rs.getString("created_at");
 				list.add(new Article(articleId, userId, location, content, createAt));
 			}
 
@@ -113,14 +113,14 @@ public class ArticleDao implements Dao<Article> {
 
 	@Override
 	public void insert(Article object) throws SQLException {
-		String sql = "INSERT INTO article(user_id,content,point,create_at) ";
+		String sql = "INSERT INTO article(user_id,content,point,created_at) ";
 		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
 
 		try {
 			PreparedStatement ps = CONNECTOR.getStatement(sql);
 			ps.setLong(1,object.getUserId());
 			ps.setString(2,object.getContent());
-			ps.setString(3,"POINT("+object.getLocationX()+" "+object.getLocationY()+")");
+			ps.setString(3,"POINT("+object.getX()+" "+object.getY()+")");
 
 			String datestr = object.getCreateAt();
 			Calendar cal = new GregorianCalendar();

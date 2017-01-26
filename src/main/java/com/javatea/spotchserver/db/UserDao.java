@@ -12,15 +12,33 @@ import java.util.List;
 public class UserDao implements Dao<User> {
 	@Override
 	public User find(long id) {
-		return null;
+		User user = null;
+		try {
+			String sql = "SELECT * FROM user where id = ?";
+			PreparedStatement stmt = CONNECTOR.getStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				long userId = rs.getLong("id");
+				String name = rs.getString("name");
+				String mail = rs.getString("email");
+				Date birthday = rs.getDate("birthday");
+				Date createAt = rs.getDate("create_at");
+
+				user = new User(userId,name,mail,birthday,createAt);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 
 	@Override
 	public List<User> findAll() {
 		List<User> list = new ArrayList<>();
 		try {
-			Statement stmt = CONNECTOR.getStatement();
 			String sql = "SELECT * FROM user";
+			PreparedStatement stmt = CONNECTOR.getStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -52,7 +70,7 @@ public class UserDao implements Dao<User> {
 	@Override
 	public void insert(User object) {
 		Connection conn = CONNECTOR.getConnection();
-		String sql = "INSERT INTO users (name,email,birthday,registerday) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO users (name,email,birthday,create_at) VALUES (?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 
