@@ -37,8 +37,8 @@ public class UserDao implements Dao<User> {
 	public List<User> findAll() {
 		List<User> list = new ArrayList<>();
 		try {
-			Statement stmt = CONNECTOR.getStatement();
 			String sql = "SELECT * FROM user";
+			PreparedStatement stmt = CONNECTOR.getStatement(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -70,7 +70,7 @@ public class UserDao implements Dao<User> {
 	@Override
 	public void insert(User object) {
 		Connection conn = CONNECTOR.getConnection();
-		String sql = "INSERT INTO users (name,email,birthday,registerday) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO users (name,email,birthday,create_at) VALUES (?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 
