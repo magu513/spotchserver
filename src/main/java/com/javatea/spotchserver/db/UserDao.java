@@ -24,8 +24,9 @@ public class UserDao implements Dao<User> {
 				String mail = rs.getString("email");
 				Date birthday = rs.getDate("birthday");
 				Date createAt = rs.getDate("create_at");
+				short status = rs.getShort("status");
 
-				user = new User(userId,name,mail,birthday,createAt);
+				user = new User(userId,name,mail,birthday,createAt,status);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -47,8 +48,8 @@ public class UserDao implements Dao<User> {
 				String email = rs.getString("email");
 				Date birthday = rs.getDate("birthday");
 				Date createAt = rs.getDate("create_at");
-
-				list.add(new User(id,name,email,birthday,createAt));
+				short status = rs.getShort("status");
+				list.add(new User(id,name,email,birthday,createAt,status));
 			}
 
 		} catch (SQLException e) {
@@ -70,14 +71,14 @@ public class UserDao implements Dao<User> {
 	@Override
 	public void insert(User object) {
 		Connection conn = CONNECTOR.getConnection();
-		String sql = "INSERT INTO users (name,email,birthday,create_at) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO users (name,email,birthday,status) VALUES (?,?,?,?)";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 
 			ps.setString(1, object.getUserName());
 			ps.setString(2, object.getEmail());
 			ps.setDate(3, (java.sql.Date) object.getBirthDate());
-			ps.setDate(4, (java.sql.Date) object.getCreateAt());
+			ps.setShort(4,object.getStatus());
 
 			ps.executeUpdate();
 			conn.commit();

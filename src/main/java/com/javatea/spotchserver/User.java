@@ -68,14 +68,6 @@ public class User {
 		this.status = status;
 	}
 
-	public User (String userName,
-				 String email,
-				 Date birthDate) {
-		this.userName = userName;
-		this.email = email;
-		this.birthDate = birthDate;
-	}
-
 	/**
 	 * 投稿者IDの取得
 	 * @return 投稿者ID
@@ -154,5 +146,13 @@ public class User {
 	 */
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
+	}
+
+	public short getStatus() {
+		return status;
+	}
+
+	public void setStatus(short status) {
+		this.status = status;
 	}
 }
