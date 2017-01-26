@@ -10,7 +10,6 @@ import java.util.List;
 
 @Component
 public class UserDao implements Dao<User> {
-	@Override
 	public User find(long id) {
 		User user = null;
 		try {
@@ -34,7 +33,6 @@ public class UserDao implements Dao<User> {
 		return user;
 	}
 
-	@Override
 	public List<User> findAll() {
 		List<User> list = new ArrayList<>();
 		try {
@@ -58,17 +56,6 @@ public class UserDao implements Dao<User> {
 		return list;
 	}
 
-	@Override
-	public void update(User object) {
-
-	}
-
-	@Override
-	public void delete(User object) {
-
-	}
-
-	@Override
 	public void insert(User object) {
 		Connection conn = CONNECTOR.getConnection();
 		String sql = "INSERT INTO users (name,email,birthday,status) VALUES (?,?,?,?)";

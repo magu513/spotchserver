@@ -71,25 +71,6 @@ public class ArticleDao implements Dao<Article> {
 		return list;
 	}
 
-	@Override
-	public Article find(long id) {
-		return null;
-	}
-
-	@Override
-	public List<Article> findAll() {
-		return null;
-	}
-
-	@Override
-	public void update(Article object) {
-	}
-
-	@Override
-	public void delete(Article object) {
-
-	}
-
 	public void delete(long id) throws SQLException {
 		String sql = "DELETE FROM article where article_id = ?";
 		PreparedStatement ps = null;
@@ -110,8 +91,6 @@ public class ArticleDao implements Dao<Article> {
 		}
 	}
 
-
-	@Override
 	public void insert(Article object) throws SQLException {
 		String sql = "INSERT INTO article(user_id,content,point,created_at) ";
 		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
