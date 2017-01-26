@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
-public class ArticleDao implements Dao<Article> {
+public class ArticleDao implements Dao {
 	public List<Article> findArticleAroundMe(double x,
 											 double y,
 											 double range) {

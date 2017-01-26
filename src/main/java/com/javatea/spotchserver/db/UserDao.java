@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class UserDao implements Dao<User> {
+public class UserDao implements Dao {
 	public User find(long id) {
 		User user = null;
 		try {
