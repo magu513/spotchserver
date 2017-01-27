@@ -1,8 +1,8 @@
 package com.javatea.spotchserver;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import com.javatea.spotchserver.opt.DateFormatter;
+
+import java.time.LocalDate;
 
 /**
  * ユーザー情報を保持するクラス
@@ -16,9 +16,9 @@ public class User {
 	/** メールアドレス */
 	private String email;
 	/** 生年月日 */
-	private Date birthDate;
+	private LocalDate birthDate;
 	/** 登録(作成)日 */
-	private Date createAt;
+	private LocalDate createAt;
 	/**
 	 * ユーザのステータス
 	 * 0:削除
@@ -40,10 +40,11 @@ public class User {
 	 */
 	public User(String userName,
 				String email,
-				Date birthDate) {
+				String birthDate) {
 		this.userName = userName;
 		this.email = email;
-		this.birthDate = birthDate;
+		this.birthDate = DateFormatter.stringToDate(birthDate);
+		this.status = 2;
 	}
 
 	/**
@@ -57,8 +58,8 @@ public class User {
 	public User(long userId,
 				String userName,
 				String email,
-				Date birthDate,
-				Date createAt,
+				LocalDate birthDate,
+				LocalDate createAt,
 				short status) {
 		this.userId = userId;
 		this.userName = userName;
@@ -120,7 +121,7 @@ public class User {
 	 * 生年月日の取得
 	 * @return 生年月日
 	 */
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
@@ -128,7 +129,7 @@ public class User {
 	 * 生年月日の設定
 	 * @param birthDate
 	 */
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
@@ -136,7 +137,7 @@ public class User {
 	 * 作成日の取得
 	 * @return 作成日
 	 */
-	public Date getCreateAt() {
+	public LocalDate getCreateAt() {
 		return createAt;
 	}
 
@@ -144,7 +145,7 @@ public class User {
 	 * 作成日の設定
 	 * @param createAt
 	 */
-	public void setCreateAt(Date createAt) {
+	public void setCreateAt(LocalDate createAt) {
 		this.createAt = createAt;
 	}
 
