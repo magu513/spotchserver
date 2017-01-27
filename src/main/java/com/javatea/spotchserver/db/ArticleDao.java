@@ -4,11 +4,7 @@ import com.javatea.spotchserver.Article;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
@@ -101,10 +97,7 @@ public class ArticleDao implements Dao {
 			ps.setString(2,object.getContent());
 			ps.setString(3,"POINT("+object.getX()+" "+object.getY()+")");
 
-			String datestr = object.getCreateAt();
-			Calendar cal = new GregorianCalendar();
-			cal.setTime(DateFormat.getDateInstance().parse(datestr.replaceAll("-","/")));
-			ps.setDate(4,new java.sql.Date(cal.getTimeInMillis()));
+			ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
 			ps.executeUpdate();
 			CONNECTOR.commit();
 		} catch (SQLException e) {
@@ -116,8 +109,6 @@ public class ArticleDao implements Dao {
 			}
 
 			throw new SQLException();
-		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 	}
 }
