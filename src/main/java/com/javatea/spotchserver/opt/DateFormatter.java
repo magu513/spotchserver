@@ -3,7 +3,7 @@ package com.javatea.spotchserver.opt;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class DateFomatter {
+public class DateFormatter {
 	private static DateTimeFormatter dtf;
 
 	public static LocalDateTime stringToDateTime(String dateStr) {
