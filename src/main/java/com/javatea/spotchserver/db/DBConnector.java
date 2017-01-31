@@ -1,14 +1,15 @@
 package com.javatea.spotchserver.db;
 
+import com.javatea.spotchserver.config.DBConf;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.*;
 
 public class DBConnector {
+	@Autowired
+	DBConf dbconf;
 	private static DBConnector dbConnector = new DBConnector();
 	private Connection conn = null;
-
-	private String url = "jdbc:postgresql://localhost:5432/spotch";
-	private String username = "spotch_admin";
-	private String password = "ju78ik";
 
 	private DBConnector() {
 		createConnection();
@@ -19,6 +20,10 @@ public class DBConnector {
 	}
 
 	private void createConnection() {
+		String url = dbconf.getUrl();
+		String username = dbconf.getUser();
+		String password = dbconf.getPass();
+
 		try {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection(url,username,password);
