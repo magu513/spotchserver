@@ -1,5 +1,6 @@
-package com.javatea.spotchserver;
+package com.javatea.spotchserver.objects;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -9,10 +10,10 @@ public class PreUser {
 	/** 投稿者ID */
 	private long userId;
 	/** 有効期限 */
-	private Date expirationDate;
+	private LocalDateTime expirationDate;
 	/** 認証文字列 */
 	private String token;
-	public PreUser(long userId,Date expirationDate,String token) {
+	public PreUser(long userId,LocalDateTime expirationDate,String token) {
 		this.userId = userId;
 		this.expirationDate = expirationDate;
 		this.token = token;
@@ -30,7 +31,7 @@ public class PreUser {
 	 * 有効期限の取得
 	 * @return 有効期限
 	 */
-	public Date getExpirationDate() {
+	public LocalDateTime getExpirationDate() {
 		return expirationDate;
 	}
 

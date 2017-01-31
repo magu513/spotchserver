@@ -1,4 +1,4 @@
-package com.javatea.spotchserver;
+package com.javatea.spotchserver.objects;
 
 import com.javatea.spotchserver.opt.DateFormatter;
 
@@ -109,8 +109,9 @@ public class Article {
 	 * 投稿日時の取得
 	 * @return 投稿日時
 	 */
-	public LocalDateTime getCreateAt() {
-		return createAt;
+	public String getCreateAt() {
+//		return createAt;
+		return DateFormatter.dateTimeToString(createAt);
 	}
 
 	/**

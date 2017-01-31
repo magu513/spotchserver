@@ -1,4 +1,4 @@
-package com.javatea.spotchserver;
+package com.javatea.spotchserver.objects;
 
 import com.javatea.spotchserver.opt.DateFormatter;
 
