@@ -11,7 +11,7 @@ public class DBConf {
 	private String user;
 	@Value("${spotch.db.pass}")
 	private String pass;
-	@Value("${spotch.db.dbname")
+	@Value("${spotch.db.dbname}")
 	private String dbName;
 
 	public String getUrl() {
