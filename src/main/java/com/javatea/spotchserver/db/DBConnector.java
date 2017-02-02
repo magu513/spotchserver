@@ -9,15 +9,19 @@ import java.sql.*;
 @Component
 public class DBConnector {
 	private Connection conn = null;
+	private final DBConf dbConf;
+
+	private String url;
+	private String username;
+	private String password;
+
 	@Autowired
-	DBConf dbConf;
-
-	//TODO Configファイル分ける
-	private String url = dbConf.getUrl();
-	private String username = dbConf.getUser();
-	private String password = dbConf.getPass();
-
-	private DBConnector() {
+	private DBConnector(DBConf dbConf) {
+		this.dbConf = dbConf;
+		this.url = "jdbc:postgresql://"+dbConf.getUrl()+"/"+dbConf.getDbName();
+		this.username = dbConf.getUser();
+		this.password = dbConf.getPass();
+		System.out.println(url+" "+username+" "+password);
 		createConnection();
 	}
 
