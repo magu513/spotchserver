@@ -2,28 +2,30 @@ package com.javatea.spotchserver.db;
 
 import com.javatea.spotchserver.config.DBConf;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
+@Component
 public class DBConnector {
-	@Autowired
-	DBConf dbconf;
-	private static DBConnector dbConnector = new DBConnector();
 	private Connection conn = null;
+	private final DBConf dbConf;
 
-	private DBConnector() {
+	private String url;
+	private String username;
+	private String password;
+
+	@Autowired
+	private DBConnector(DBConf dbConf) {
+		this.dbConf = dbConf;
+		this.url = "jdbc:postgresql://"+dbConf.getUrl()+"/"+dbConf.getDbName();
+		this.username = dbConf.getUser();
+		this.password = dbConf.getPass();
+		System.out.println(url+" "+username+" "+password);
 		createConnection();
 	}
 
-	static DBConnector getInstance() {
-		return dbConnector;
-	}
-
 	private void createConnection() {
-		String url = dbconf.getUrl();
-		String username = dbconf.getUser();
-		String password = dbconf.getPass();
-
 		try {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection(url,username,password);
