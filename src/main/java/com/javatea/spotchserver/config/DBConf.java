@@ -11,6 +11,8 @@ public class DBConf {
 	private String user;
 	@Value("${spotch.db.pass}")
 	private String pass;
+	@Value("${spotch.db.dbname")
+	private String dbName;
 
 	public String getUrl() {
 		return url;
@@ -38,5 +40,13 @@ public class DBConf {
 
 	public String toString() {
 		return url + " " + user + " " + pass;
+	}
+
+	public String getDbName() {
+		return dbName;
+	}
+
+	public void setDbName(String dbName) {
+		this.dbName = dbName;
 	}
 }
