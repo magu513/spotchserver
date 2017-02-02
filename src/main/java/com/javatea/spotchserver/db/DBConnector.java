@@ -2,21 +2,19 @@ package com.javatea.spotchserver.db;
 
 import com.javatea.spotchserver.config.DBConf;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
+@Component
 public class DBConnector {
 	@Autowired
 	DBConf dbconf;
-	private static DBConnector dbConnector = new DBConnector();
+//	private static DBConnector dbConnector = new DBConnector();
 	private Connection conn = null;
 
-	private DBConnector() {
+	DBConnector() {
 		createConnection();
-	}
-
-	static DBConnector getInstance() {
-		return dbConnector;
 	}
 
 	private void createConnection() {
