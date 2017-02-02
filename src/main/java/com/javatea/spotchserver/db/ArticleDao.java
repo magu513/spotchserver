@@ -1,6 +1,7 @@
 package com.javatea.spotchserver.db;
 
-import com.javatea.spotchserver.Article;
+import com.javatea.spotchserver.objects.Article;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -8,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ArticleDao implements Dao {
+public class ArticleDao {
+	@Autowired
+	private DBConnector CONNECTOR;
+
 	public List<Article> findArticleAroundMe(double x,
 											 double y,
 											 double range) {
