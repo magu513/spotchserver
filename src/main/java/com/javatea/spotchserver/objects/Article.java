@@ -1,7 +1,8 @@
-package com.javatea.spotchserver;
+package com.javatea.spotchserver.objects;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import com.javatea.spotchserver.opt.DateFormatter;
+
+import java.time.LocalDateTime;
 
 /**
  * 投稿を保持するためのクラス
@@ -20,7 +21,7 @@ public class Article {
 	/**  投稿内容 */
 	private String content;
 	/** 投稿（作成）日時 */
-	private String createAt;
+	private LocalDateTime createAt;
 
 	/**
 	 * デフォルトコンストラクタ
@@ -51,7 +52,7 @@ public class Article {
 		this.y = Double.parseDouble(tmp[1]);
 
 		this.content = content;
-		this.createAt = createAt;
+		this.createAt = DateFormatter.stringToDateTime(createAt,"yyyy-MM-dd HH:mm:ss");
 	}
 
 	/**
@@ -69,9 +70,7 @@ public class Article {
 		this.x = x;
 		this.y = y;
 		this.content = content;
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
-		this.createAt = sdf.format(c.getTime());
+		this.createAt = LocalDateTime.now();
 	}
 
 	/**
@@ -111,14 +110,15 @@ public class Article {
 	 * @return 投稿日時
 	 */
 	public String getCreateAt() {
-		return createAt;
+//		return createAt;
+		return DateFormatter.dateTimeToString(createAt);
 	}
 
 	/**
 	 * 投稿日時の設定
 	 * @param createAt
 	 */
-	public void setCreateAt(String createAt) {
+	public void setCreateAt(LocalDateTime createAt) {
 		this.createAt = createAt;
 	}
 

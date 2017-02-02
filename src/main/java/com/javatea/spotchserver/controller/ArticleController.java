@@ -1,7 +1,7 @@
 package com.javatea.spotchserver.controller;
 
-import com.javatea.spotchserver.Article;
 import com.javatea.spotchserver.db.ArticleDao;
+import com.javatea.spotchserver.objects.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

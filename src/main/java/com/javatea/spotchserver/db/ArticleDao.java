@@ -1,18 +1,18 @@
 package com.javatea.spotchserver.db;
 
-import com.javatea.spotchserver.Article;
+import com.javatea.spotchserver.objects.Article;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
-public class ArticleDao implements Dao<Article> {
+public class ArticleDao {
+	@Autowired
+	private DBConnector CONNECTOR;
+
 	public List<Article> findArticleAroundMe(double x,
 											 double y,
 											 double range) {
@@ -71,25 +71,6 @@ public class ArticleDao implements Dao<Article> {
 		return list;
 	}
 
-	@Override
-	public Article find(long id) {
-		return null;
-	}
-
-	@Override
-	public List<Article> findAll() {
-		return null;
-	}
-
-	@Override
-	public void update(Article object) {
-	}
-
-	@Override
-	public void delete(Article object) {
-
-	}
-
 	public void delete(long id) throws SQLException {
 		String sql = "DELETE FROM article where article_id = ?";
 		PreparedStatement ps = null;
@@ -110,8 +91,6 @@ public class ArticleDao implements Dao<Article> {
 		}
 	}
 
-
-	@Override
 	public void insert(Article object) throws SQLException {
 		String sql = "INSERT INTO article(user_id,content,point,created_at) ";
 		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
@@ -122,10 +101,7 @@ public class ArticleDao implements Dao<Article> {
 			ps.setString(2,object.getContent());
 			ps.setString(3,"POINT("+object.getX()+" "+object.getY()+")");
 
-			String datestr = object.getCreateAt();
-			Calendar cal = new GregorianCalendar();
-			cal.setTime(DateFormat.getDateInstance().parse(datestr.replaceAll("-","/")));
-			ps.setDate(4,new java.sql.Date(cal.getTimeInMillis()));
+			ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
 			ps.executeUpdate();
 			CONNECTOR.commit();
 		} catch (SQLException e) {
@@ -137,8 +113,6 @@ public class ArticleDao implements Dao<Article> {
 			}
 
 			throw new SQLException();
-		} catch (ParseException e) {
-			e.printStackTrace();
 		}
 	}
 }
