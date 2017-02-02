@@ -8,20 +8,20 @@ import java.sql.*;
 
 @Component
 public class DBConnector {
-	@Autowired
-	DBConf dbconf;
-//	private static DBConnector dbConnector = new DBConnector();
 	private Connection conn = null;
+	@Autowired
+	DBConf dbConf;
 
-	DBConnector() {
+	//TODO Configファイル分ける
+	private String url = dbConf.getUrl();
+	private String username = dbConf.getUser();
+	private String password = dbConf.getPass();
+
+	private DBConnector() {
 		createConnection();
 	}
 
 	private void createConnection() {
-		String url = dbconf.getUrl();
-		String username = dbconf.getUser();
-		String password = dbconf.getPass();
-
 		try {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection(url,username,password);
