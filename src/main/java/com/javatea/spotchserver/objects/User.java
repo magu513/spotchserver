@@ -25,9 +25,9 @@ public class User {
 
 	/**
 	 * ユーザのステータス
-	 * 0:削除
+	 * 2:削除
 	 * 1:通常
-	 * 2:未認証
+	 * 0:未認証
 	 */
 	private short status;
 
@@ -155,18 +155,34 @@ public class User {
 		this.createAt = createAt;
 	}
 
+	/**
+	 * ステータスの取得
+	 * @return
+	 */
 	public short getStatus() {
 		return status;
 	}
 
+	/**
+	 * ステータスの設定
+	 * @param status
+	 */
 	public void setStatus(short status) {
 		this.status = status;
 	}
 
+	/**
+	 * 更新日時の取得
+	 * @return
+	 */
 	public LocalDateTime getUpdateAt() {
 		return updateAt;
 	}
 
+	/**
+	 * 投稿日時の設定
+	 * @param updateAt
+	 */
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;
 	}

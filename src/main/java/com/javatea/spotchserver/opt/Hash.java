@@ -7,9 +7,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * 文字列のHash化を行うクラス
+ */
 public class Hash {
+	/** 変換に利用するアルゴリズム*/
 	private static final String ALGORITHM = "PBKDF2WithHmacSHA256";
+	/** Hash化の実行回数*/
 	private static final int ITERATION_COUNT = 10000;
+	/** Hashの文字数の指定*/
 	private static final int KEY_LENGTH = 256;
 
 	/**

@@ -1,5 +1,6 @@
 package com.javatea.spotchserver.objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javatea.spotchserver.opt.DateFormatter;
 
 import java.time.LocalDateTime;
@@ -14,13 +15,14 @@ public class Article {
 	private long userId;
 
 	/** 位置情報X軸 */
-	private double x;
+	private double latitude;
 	/** 位置情報Y軸*/
-	private double y;
+	private double longitude;
 
 	/**  投稿内容 */
 	private String content;
 	/** 投稿（作成）日時 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createAt;
 
 	/**
@@ -48,8 +50,8 @@ public class Article {
 		location = location.replace("POINT","");
 		location = location.replaceAll("[()]","");
 		String tmp[] = location.split(" ");
-		this.x = Double.parseDouble(tmp[0]);
-		this.y = Double.parseDouble(tmp[1]);
+		this.latitude = Double.parseDouble(tmp[0]);
+		this.longitude = Double.parseDouble(tmp[1]);
 
 		this.content = content;
 		this.createAt = DateFormatter.stringToDateTime(createAt,"yyyy-MM-dd HH:mm:ss");
@@ -58,17 +60,17 @@ public class Article {
 	/**
 	 * 作成された時間が自動で挿入される
 	 * @param userId
-	 * @param x
-	 * @param y
+	 * @param latitude
+	 * @param longitude
 	 * @param content
 	 */
 	public Article (long userId,
-					double x,
-					double y,
+					double latitude,
+					double longitude,
 					String content) {
 		this.userId = userId;
-		this.x = x;
-		this.y = y;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.content = content;
 		this.createAt = LocalDateTime.now();
 	}
@@ -94,7 +96,7 @@ public class Article {
 	 * @return
 	 */
 	public String getContent() {
-		return content;
+		return content == null ? "" : content;
 	}
 
 	/**
@@ -142,31 +144,36 @@ public class Article {
 	 * X軸の取得
 	 * @return X軸
 	 */
-	public double getX() {
-		return x;
+	public double getLatitude() {
+		return latitude;
 	}
 
 	/**
 	 * X軸の設定
-	 * @param x
+	 * @param latitude
 	 */
-	public void setX(double x) {
-		this.x = x;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 
 	/**
 	 * Y軸の取得
 	 * @return Y軸
 	 */
-	public double getY() {
-		return y;
+	public double getLongitude() {
+		return longitude;
 	}
 
 	/**
 	 * Y軸の設定
-	 * @param y
+	 * @param longitude
 	 */
-	public void setY(double y) {
-		this.y = y;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	@Override
+	public String toString() {
+		return userId + " " + postId + " " + latitude + " " + longitude + " " + content + " "  + createAt;
 	}
 }

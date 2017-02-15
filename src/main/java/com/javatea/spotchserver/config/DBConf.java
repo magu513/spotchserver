@@ -3,6 +3,9 @@ package com.javatea.spotchserver.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * DBの設定を保持するクラス
+ */
 @Component
 public class DBConf {
 	@Value("${spotch.db.url}")

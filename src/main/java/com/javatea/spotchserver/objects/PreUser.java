@@ -1,10 +1,11 @@
 package com.javatea.spotchserver.objects;
 
+import com.javatea.spotchserver.opt.Hash;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
- * Created by ShoyaYamaguchi on 2017/01/26.
+ * 仮登録ユーザークラス
  */
 public class PreUser {
 	/** 投稿者ID */
@@ -13,10 +14,11 @@ public class PreUser {
 	private LocalDateTime expirationDate;
 	/** 認証文字列 */
 	private String token;
-	public PreUser(long userId,LocalDateTime expirationDate,String token) {
+
+	public PreUser(long userId,LocalDateTime expirationDate) {
 		this.userId = userId;
 		this.expirationDate = expirationDate;
-		this.token = token;
+		this.token = Hash.getHashStr(userId + expirationDate.toString() );
 	}
 
 	/**

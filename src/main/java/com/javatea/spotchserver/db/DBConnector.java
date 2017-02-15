@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
+/**
+ * DBとの接続を確立するクラス
+ */
 @Component
 public class DBConnector {
 	private Connection conn = null;
@@ -25,6 +28,9 @@ public class DBConnector {
 		createConnection();
 	}
 
+	/**
+	 * DBとの接続を確立する
+	 */
 	private void createConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -41,10 +47,12 @@ public class DBConnector {
 		return conn.createStatement();
 	}
 
-	Connection getConnection() {
-		return conn;
-	}
-
+	/**
+	 * PreparedStatement
+	 * @param sql
+	 * @return
+	 * @throws SQLException
+	 */
 	PreparedStatement getStatement(String sql) throws SQLException {
 		return conn.prepareStatement(sql);
 	}
@@ -60,10 +68,18 @@ public class DBConnector {
 		}
 	}
 
+	/**
+	 * DBへの追加、更新を反映
+	 * @throws SQLException
+	 */
 	void commit() throws SQLException {
 		conn.commit();
 	}
 
+	/**
+	 * DBへの追加、更新をなかったことにする
+	 * @throws SQLException
+	 */
 	void rollback() throws SQLException {
 		conn.rollback();
 	}
