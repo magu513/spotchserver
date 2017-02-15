@@ -11,20 +11,15 @@ import java.sql.*;
  */
 @Component
 public class DBConnector {
+	/** DBとのコネクションを保持する */
 	private Connection conn = null;
+	/** DBのコンフィグを保持する */
 	private final DBConf dbConf;
 
-	private String url;
-	private String username;
-	private String password;
 
 	@Autowired
 	private DBConnector(DBConf dbConf) {
 		this.dbConf = dbConf;
-		this.url = "jdbc:postgresql://"+dbConf.getUrl()+"/"+dbConf.getDbName();
-		this.username = dbConf.getUser();
-		this.password = dbConf.getPass();
-		System.out.println(url+" "+username+" "+password);
 		createConnection();
 	}
 
@@ -32,9 +27,11 @@ public class DBConnector {
 	 * DBとの接続を確立する
 	 */
 	private void createConnection() {
+		String url = "jdbc:postgresql://"+dbConf.getUrl()+"/"+dbConf.getDbName();
+
 		try {
 			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection(url,username,password);
+			conn = DriverManager.getConnection(url,dbConf.getUser(),dbConf.getPass());
 
 			conn.setAutoCommit(false);
 		} catch (SQLException | ClassNotFoundException e) {
@@ -48,7 +45,7 @@ public class DBConnector {
 	}
 
 	/**
-	 * PreparedStatement
+	 * ConnectionからPreparedStatementオブジェクトを取得する
 	 * @param sql
 	 * @return
 	 * @throws SQLException
@@ -57,6 +54,10 @@ public class DBConnector {
 		return conn.prepareStatement(sql);
 	}
 
+
+	/**
+	 * Connectionを閉じる
+	 */
 	public void closeConnection() {
 		try {
 			if (conn != null) {
@@ -69,7 +70,7 @@ public class DBConnector {
 	}
 
 	/**
-	 * DBへの追加、更新を反映
+	 * DBのコミットを行う
 	 * @throws SQLException
 	 */
 	void commit() throws SQLException {
@@ -77,7 +78,7 @@ public class DBConnector {
 	}
 
 	/**
-	 * DBへの追加、更新をなかったことにする
+	 * DBのロールバックを行う
 	 * @throws SQLException
 	 */
 	void rollback() throws SQLException {

@@ -9,11 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * 仮登録用ユーザのDaoクラス
+ */
 @Component
 public class PreUserDao {
 	@Autowired
 	private DBConnector connector;
 
+	/**
+	 * 仮登録ユーザのinsertを実行する
+	 * @param p
+	 */
 	public void insert(PreUser p) {
 		String sql = "INSERT INTO preuser VALUES (?,?,?)";
 		try {
@@ -33,6 +40,11 @@ public class PreUserDao {
 		}
 	}
 
+	/**
+	 * 仮登録用のアクセストークンを元にユーザを検索する
+	 * @param token
+	 * @return
+	 */
 	public long find(String token) {
 		String sql = "SELECT user_id FROM preuser where token = ?";
 		long userId = 0;
@@ -50,6 +62,10 @@ public class PreUserDao {
 		return userId;
 	}
 
+	/**
+	 * 本登録の実行もしくは、有効期限が切れたユーザを削除する
+	 * @param userId
+	 */
 	public void delete(long userId) {
 		String sql = "DELETE FROM preuser where user_id = ?";
 

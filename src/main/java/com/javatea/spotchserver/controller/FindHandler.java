@@ -10,11 +10,13 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 投稿検索に関する通信の処理を実装したクラス
+ */
 @Component
 public class FindHandler extends TextWebSocketHandler{
 	private Map<String,WebSocketSession> sessionPool = new ConcurrentHashMap<>();
@@ -45,7 +47,7 @@ public class FindHandler extends TextWebSocketHandler{
 	}
 
 	/**
-	 * ハンドリングしたテキストメッセージをグローバルキャストします。
+	 * 要求された情報をDBから取得し、返却する。
 	 * @param session セッション
 	 * @param message メッセージ
 	 */
