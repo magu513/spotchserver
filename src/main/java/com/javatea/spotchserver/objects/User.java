@@ -17,7 +17,7 @@ public class User {
 	/** メールアドレス */
 	private String email;
 	/** 生年月日 */
-	private LocalDate birthDate;
+	private LocalDate birthDay;
 	/** 登録(作成)日 */
 	private LocalDateTime createAt;
 	/** 更新日時*/
@@ -40,14 +40,14 @@ public class User {
 	 * 仮登録時に呼ばれる
 	 * @param userName
 	 * @param email
-	 * @param birthDate
+	 * @param birthDay
 	 */
 	public User(String userName,
 				String email,
-				String birthDate) {
+				String birthDay) {
 		this.userName = userName;
 		this.email = email;
-		this.birthDate = DateFormatter.stringToDate(birthDate);
+		this.birthDay = DateFormatter.stringToDate(birthDay);
 		this.status = 2;
 	}
 
@@ -56,20 +56,20 @@ public class User {
 	 * @param userId
 	 * @param userName
 	 * @param email
-	 * @param birthDate
+	 * @param birthDay
 	 * @param createAt
 	 */
 	public User(long userId,
 				String userName,
 				String email,
-				LocalDate birthDate,
+				LocalDate birthDay,
 				LocalDateTime createAt,
 				LocalDateTime updateAt,
 				short status) {
 		this.userId = userId;
 		this.userName = userName;
 		this.email = email;
-		this.birthDate = birthDate;
+		this.birthDay = birthDay;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
 		this.status = status;
@@ -127,16 +127,16 @@ public class User {
 	 * 生年月日の取得
 	 * @return 生年月日
 	 */
-	public LocalDate getBirthDate() {
-		return birthDate;
+	public LocalDate getBirthDay() {
+		return birthDay;
 	}
 
 	/**
 	 * 生年月日の設定
-	 * @param birthDate
+	 * @param birthDay
 	 */
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
+	public void setBirthDay(LocalDate birthDay) {
+		this.birthDay = birthDay;
 	}
 
 	/**

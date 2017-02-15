@@ -80,27 +80,31 @@ public class UserDao {
 	 * @param object
 	 * @return
 	 */
-	public long insert(User object) {
-		String sql = "INSERT INTO users (name,email,birthday) VALUES (?,?,?) returning id";
+	public User insert(User object) throws SQLException {
+		String sql = "INSERT INTO users (name,email,birthday,createAt) VALUES (?,?,?) returning id";
 		long id = 0;
 		try {
+			object.setCreateAt(LocalDateTime.now());
 			PreparedStatement ps = connector.getStatement(sql);
 
 			ps.setString(1, object.getUserName());
 			ps.setString(2, object.getEmail());
-			ps.setDate(3, Date.valueOf(object.getBirthDate()));
-
+			ps.setDate(3, Date.valueOf(object.getBirthDay()));
+			ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				id = rs.getLong("id");
+				object.setUserId(rs.getLong("id"));
 			}
 			connector.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			connector.rollback();
+
+			throw new SQLException();
 		}
 
-		return id;
+		return object;
 	}
 
 	/**
@@ -114,7 +118,7 @@ public class UserDao {
 			PreparedStatement ps = connector.getStatement(sql);
 			ps.setString(1,user.getUserName());
 			ps.setString(2,user.getEmail());
-			ps.setDate(3, Date.valueOf(user.getBirthDate()));
+			ps.setDate(3, Date.valueOf(user.getBirthDay()));
 			ps.setTimestamp(4, Timestamp.valueOf(user.getCreateAt()));
 			ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
 			ps.setShort(6,user.getStatus());
