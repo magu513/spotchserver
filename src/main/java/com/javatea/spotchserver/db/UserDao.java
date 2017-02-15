@@ -81,7 +81,7 @@ public class UserDao {
 	 * @return
 	 */
 	public User insert(User object) throws SQLException {
-		String sql = "INSERT INTO users (name,email,birthday,createAt) VALUES (?,?,?,?) returning id";
+		String sql = "INSERT INTO users (name,email,birthday,create_at) VALUES (?,?,?,?) returning id";
 		long id = 0;
 		try {
 			object.setCreateAt(LocalDateTime.now());
