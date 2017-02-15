@@ -8,11 +8,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 投稿情報をDBで扱うためのクラス
+ */
 @Component
 public class ArticleDao {
 	@Autowired
-	private DBConnector CONNECTOR;
+	private DBConnector connector;
 
+	/**
+	 * ユーザーの周囲の投稿を取得する
+	 * @param x
+	 * @param y
+	 * @param range
+	 * @return
+	 */
 	public List<Article> findArticleAroundMe(double x,
 											 double y,
 											 double range) {
@@ -21,7 +31,7 @@ public class ArticleDao {
 			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,created_at ";
 			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?)";
 
-			PreparedStatement stmt = CONNECTOR.getStatement(sql);
+			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,"POINT("+x+" "+y+")");
 			stmt.setDouble(2,range);
 			ResultSet rs = stmt.executeQuery();
@@ -43,13 +53,18 @@ public class ArticleDao {
 		return list;
 	}
 
+	/**
+	 * 指定したユーザーの投稿を取得する
+	 * @param userId
+	 * @return
+	 */
 	public List<Article> findByUserId(long userId) {
 		List<Article> list = new ArrayList<>();
 		try {
 			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,created_at ";
 			sql += "FROM article WHERE user_id = ?";
 
-			PreparedStatement stmt = CONNECTOR.getStatement(sql);
+			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setLong(1, userId);
 			ResultSet rs = stmt.executeQuery();
 
@@ -71,18 +86,23 @@ public class ArticleDao {
 		return list;
 	}
 
+	/**
+	 * 指定した投稿を削除する
+	 * @param id
+	 * @throws SQLException
+	 */
 	public void delete(long id) throws SQLException {
 		String sql = "DELETE FROM article where article_id = ?";
 		PreparedStatement ps = null;
 		try {
-			ps = CONNECTOR.getStatement(sql);
+			ps = connector.getStatement(sql);
 			ps.setLong(1,id);
 			ps.executeUpdate();
 
-			CONNECTOR.commit();
+			connector.commit();
 		} catch (SQLException e) {
 			try {
-				CONNECTOR.rollback();
+				connector.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -91,23 +111,28 @@ public class ArticleDao {
 		}
 	}
 
+	/**
+	 * 投稿を新規登録する
+	 * @param object
+	 * @throws SQLException
+	 */
 	public void insert(Article object) throws SQLException {
 		String sql = "INSERT INTO article(user_id,content,point,created_at) ";
 		sql += "VALUES (?,?,ST_GeomFromText(?,4326),?)";
 
 		try {
-			PreparedStatement ps = CONNECTOR.getStatement(sql);
+			PreparedStatement ps = connector.getStatement(sql);
 			ps.setLong(1,object.getUserId());
 			ps.setString(2,object.getContent());
-			ps.setString(3,"POINT("+object.getX()+" "+object.getY()+")");
+			ps.setString(3,"POINT("+object.getLatitude()+" "+object.getLongitude()+")");
 
 			ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
 			ps.executeUpdate();
-			CONNECTOR.commit();
+			connector.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
-				CONNECTOR.rollback();
+				connector.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
