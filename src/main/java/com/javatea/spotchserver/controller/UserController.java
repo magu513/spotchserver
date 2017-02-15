@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 /**
@@ -44,18 +45,18 @@ public class UserController {
 	public void signon(@RequestParam String username,
 					   @RequestParam String email,
 					   @RequestParam String birthday,
-					   @RequestParam String password) {
+					   @RequestParam String password) throws SQLException {
 
 		/*TODO DBに登録し損なった場合の処理を実装する*/
 		User u = new User(username,email,birthday);
-		long userId = ud.insert(u);
+		u = ud.insert(u);
 		LocalDateTime now = LocalDateTime.now();
-		PreUser pu = new PreUser(userId,now);
+		PreUser pu = new PreUser(u.getUserId(),now);
 		pud.insert(pu);
 
-		String salt = Hash.getHashStr(String.valueOf(userId));
+		String salt = Hash.getHashStr(String.valueOf(u));
 		String hashPass = Hash.getPassHash(password, salt);
-		pd.insert(userId,hashPass,salt);
+		pd.insert(u.getUserId(),hashPass,salt);
 
 		ms.send(email,pu.getToken());
 		/*TODO 成否を送信したい*/
