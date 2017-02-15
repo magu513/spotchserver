@@ -10,13 +10,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+/**
+ * 新規投稿に関するハンドラクラス
+ */
 @Component
 public class CreateHandler extends TextWebSocketHandler{
 	@Autowired
 	private ArticleController ac;
 
 	/**
-	 * ハンドリングしたテキストメッセージをグローバルキャストします。
+	 * クライアントから投稿を取得し、Daoクラスへ投げる
 	 * @param session セッション
 	 * @param message メッセージ
 	 */

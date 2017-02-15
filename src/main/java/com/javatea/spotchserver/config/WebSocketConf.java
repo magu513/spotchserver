@@ -9,6 +9,9 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 
+/**
+ * WebSocket通信のコンフィグクラス
+ */
 @Configuration
 @EnableWebSocket
 public class WebSocketConf implements WebSocketConfigurer {
@@ -17,6 +20,10 @@ public class WebSocketConf implements WebSocketConfigurer {
 	@Autowired
 	private CreateHandler createHandler;
 
+	/**
+	 * ハンドラの登録を行う
+	 * @param registry
+	 */
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(findHandler,"/socket/articles/find").setAllowedOrigins("*");
