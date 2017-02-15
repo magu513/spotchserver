@@ -58,6 +58,7 @@ public class FindHandler extends TextWebSocketHandler{
 		FindMessage fm = mapper.readValue(message.getPayload(),FindMessage.class);
 		List articles = ac.read(fm.getLatitude(),fm.getLongitude(),fm.getRange());
 		String json = mapper.writeValueAsString(articles);
+		System.out.println(json);
 		session.sendMessage(new TextMessage(json.getBytes()));
 	}
 }
