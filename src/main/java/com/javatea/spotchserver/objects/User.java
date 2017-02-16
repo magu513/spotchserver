@@ -1,5 +1,6 @@
 package com.javatea.spotchserver.objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.javatea.spotchserver.opt.DateFormatter;
 
 import java.time.LocalDate;
@@ -19,8 +20,10 @@ public class User {
 	/** 生年月日 */
 	private LocalDate birthDay;
 	/** 登録(作成)日 */
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createAt;
 	/** 更新日時*/
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updateAt;
 
 	/**

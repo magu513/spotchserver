@@ -1,6 +1,7 @@
 package com.javatea.spotchserver.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.javatea.spotchserver.db.PassDao;
 import com.javatea.spotchserver.db.UserDao;
 import com.javatea.spotchserver.objects.Password;
@@ -23,6 +24,8 @@ public class SignInHandler extends TextWebSocketHandler {
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+
 		SignInMessage m = mapper.readValue(message.getPayload(),SignInMessage.class);
 		User user = ud.findWhereMail(m.getEmail());
 		Password password = pd.find(user.getUserId());
