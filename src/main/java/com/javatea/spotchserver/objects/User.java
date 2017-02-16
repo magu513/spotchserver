@@ -18,6 +18,7 @@ public class User {
 	/** メールアドレス */
 	private String email;
 	/** 生年月日 */
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthDay;
 	/** 登録(作成)日 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
