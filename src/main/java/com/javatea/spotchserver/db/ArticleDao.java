@@ -30,10 +30,11 @@ public class ArticleDao {
 		try {
 			String sql = "SELECT article.article_id,article.user_id,content,ST_AsText(point) AS location,created_at," +
 					"COALESCE(f.fav_count,0) AS fav_count," +
-					"CASE truth when 1 THEN 'true' ELSE 'false' END as favorite" +
-					"left join (select article_id,count(article_id) as fav_count,truth from favorite group by article_id,truth) as f" +
-					"on article.article_id = f.article_id";
-			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
+					"CASE truth when 1 THEN 'true' ELSE 'false' END as favorite "; 
+			sql += "FROM article " +
+				"left outer join (select article_id,count(article_id) as fav_count,truth from favorite group by article_id,truth) as f " +
+				"on article.article_id = f.article_id " +
+				"WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
 
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,"POINT("+x+" "+y+")");
@@ -67,10 +68,11 @@ public class ArticleDao {
 		List<Article> list = new ArrayList<>();
 		try {
 			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,created_at,fav_count," +
-					"CASE truth when 1 THEN 'true' ELSE 'false' END as favorite" +
-					"left join (select article_id,count(article_id) as fav_count,truth from favorite group by article_id,truth) as f" +
-					"on article.article_id = f.article_id";
-			sql += "FROM article WHERE user_id = ?";
+					"CASE truth when 1 THEN 'true' ELSE 'false' END as favorite ";
+			sql += "FROM article " +
+					"left join (select article_id,count(article_id) as fav_count,truth from favorite group by article_id,truth) as f " +
+					"on article.article_id = f.article_id " +
+					"WHERE user_id = ?";
 
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setLong(1, userId);
