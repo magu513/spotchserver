@@ -1,8 +1,14 @@
 package com.javatea.spotchserver.objects.websocket;
 
+/**
+ * 検索用MessageのJSONを読み込むためのクラス
+ */
 public class FindMessage {
+	/** 緯度 */
 	private double latitude;
+	/** 経度 */
 	private double longitude;
+	/** 範囲 */
 	private int range;
 
 	public double getLatitude() {

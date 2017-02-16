@@ -2,6 +2,7 @@ package com.javatea.spotchserver.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javatea.spotchserver.controller.ArticleController;
+import com.javatea.spotchserver.objects.Article;
 import com.javatea.spotchserver.objects.websocket.FindMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,8 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -56,7 +56,8 @@ public class FindHandler extends TextWebSocketHandler{
 		System.out.println(message.getPayload());
 		ObjectMapper mapper = new ObjectMapper();
 		FindMessage fm = mapper.readValue(message.getPayload(),FindMessage.class);
-		List articles = ac.read(fm.getLatitude(),fm.getLongitude(),fm.getRange());
+		List<Article> articles = ac.read(fm.getLatitude(),fm.getLongitude(),fm.getRange());
+		articles.sort((a1,a2) -> Long.compare(a2.getUserId(),a1.getUserId()));
 		String json = mapper.writeValueAsString(articles);
 		System.out.println(json);
 		session.sendMessage(new TextMessage(json));
