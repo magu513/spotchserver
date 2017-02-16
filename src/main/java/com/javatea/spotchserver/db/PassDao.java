@@ -25,7 +25,7 @@ public class PassDao {
 	}
 
 	public Password find(long id) throws SQLException {
-		String sql = "SELECT pass,salt FROM password where id = ?";
+		String sql = "SELECT pass,salt FROM password where user_id = ?";
 		PreparedStatement stmt = connector.getStatement(sql);
 		stmt.setLong(1,id);
 
