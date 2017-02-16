@@ -29,7 +29,7 @@ public class ArticleDao {
 		List<Article> list = new ArrayList<>();
 		try {
 			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,created_at ";
-			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?)";
+			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
 
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,"POINT("+x+" "+y+")");
