@@ -28,8 +28,10 @@ public class ArticleDao {
 											 double range) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,created_at ";
-			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,created_at," +
+					"CASE WHEN article.article_id = favorite.article_id AND users.id = favorite.user_id THEN 'true'" +
+					"else 'false' end as fav";
+			sql += "FROM article,users,favorite WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
 
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,"POINT("+x+" "+y+")");
@@ -42,8 +44,8 @@ public class ArticleDao {
 				String content = rs.getString("content");
 				String location = rs.getString("location");
 				String createAt = rs.getString("created_at");
-
-				list.add(new Article(articleId, userId, location, content, createAt));
+				boolean favorite = rs.getBoolean("fav");
+				list.add(new Article(articleId, userId, location, content, createAt,favorite));
 			}
 			rs.close();
 			stmt.close();
@@ -73,7 +75,7 @@ public class ArticleDao {
 				String content = rs.getString("content");
 				String location = rs.getString("point");
 				String createAt = rs.getString("created_at");
-				list.add(new Article(articleId, userId, location, content, createAt));
+				list.add(new Article(articleId, userId, location, content, createAt,false));
 			}
 
 			rs.close();

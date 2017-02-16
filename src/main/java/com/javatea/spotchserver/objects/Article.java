@@ -24,6 +24,8 @@ public class Article {
 	/** 投稿（作成）日時 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createAt;
+	/** お気に入り判定 */
+	private boolean favorite;
 
 	/**
 	 * デフォルトコンストラクタ
@@ -42,7 +44,8 @@ public class Article {
 				   long userId,
 				   String location,
 				   String content,
-				   String createAt) {
+				   String createAt,
+				   boolean favorite) {
 
 		this.postId = postId;
 		this.userId = userId;
@@ -55,6 +58,7 @@ public class Article {
 
 		this.content = content;
 		this.createAt = DateFormatter.stringToDateTime(createAt,"yyyy-MM-dd HH:mm:ss");
+		this.favorite = favorite;
 	}
 
 	/**
@@ -175,5 +179,13 @@ public class Article {
 	@Override
 	public String toString() {
 		return userId + " " + postId + " " + latitude + " " + longitude + " " + content + " "  + createAt;
+	}
+
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
 	}
 }
