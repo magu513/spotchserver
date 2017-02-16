@@ -22,7 +22,7 @@ public class FavoriteDao {
 	}
 
 	public void delete(FavoriteMessage message) throws SQLException {
-		String sql = "DELETE FORM favorite where user_id = ? and article_id = ?";
+		String sql = "DELETE FROM favorite where user_id = ? and article_id = ?";
 		PreparedStatement stmt = connector.getStatement(sql);
 
 		stmt.setLong(1,message.getUserId());
