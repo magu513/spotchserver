@@ -28,7 +28,7 @@ public class ArticleDao {
 											 double range) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS location,created_at," +
+			String sql = "SELECT article.article_id,article.user_id,content,ST_AsText(point) AS location,created_at," +
 					"CASE WHEN article.article_id = favorite.article_id AND users.id = favorite.user_id THEN 'true'" +
 					"else 'false' end as fav";
 			sql += "FROM article,users,favorite WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
