@@ -41,7 +41,7 @@ public class UserDao {
 	public User findWhereMail(String mail) {
 		User user = null;
 		try {
-			String sql = "SELECT * FROM user where mail = ?";
+			String sql = "SELECT * FROM user where email = ?";
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,mail);
 			ResultSet rs = stmt.executeQuery();
