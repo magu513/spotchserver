@@ -29,9 +29,11 @@ public class ArticleDao {
 		List<Article> list = new ArrayList<>();
 		try {
 			String sql = "SELECT article.article_id,article.user_id,content,ST_AsText(point) AS location,created_at," +
-					"CASE WHEN article.article_id = favorite.article_id AND users.id = favorite.user_id THEN 'true'" +
-					"else 'false' end as fav";
-			sql += "FROM article,users,favorite WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
+					"COALESCE(f.fav_count,0) AS fav_count," +
+					"CASE truth when 1 THEN 'true' ELSE 'false' END as favorite" +
+					"left join (select article_id,count(article_id) as fav_count,truth from favorite group by article_id,truth) as f" +
+					"on article.article_id = f.article_id";
+			sql += "FROM article WHERE ST_DWithin(point,ST_GeographyFromText(?),?) order by article_id desc";
 
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,"POINT("+x+" "+y+")");
@@ -44,8 +46,9 @@ public class ArticleDao {
 				String content = rs.getString("content");
 				String location = rs.getString("location");
 				String createAt = rs.getString("created_at");
-				boolean favorite = rs.getBoolean("fav");
-				list.add(new Article(articleId, userId, location, content, createAt,favorite));
+				boolean favorite = rs.getBoolean("favorite");
+				int favCount = rs.getInt("fav_count");
+				list.add(new Article(articleId, userId, location, content, createAt,favorite,favCount));
 			}
 			rs.close();
 			stmt.close();
@@ -63,7 +66,10 @@ public class ArticleDao {
 	public List<Article> findByUserId(long userId) {
 		List<Article> list = new ArrayList<>();
 		try {
-			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,created_at ";
+			String sql = "SELECT article_id,user_id,content,ST_AsText(point) AS point,created_at,fav_count," +
+					"CASE truth when 1 THEN 'true' ELSE 'false' END as favorite" +
+					"left join (select article_id,count(article_id) as fav_count,truth from favorite group by article_id,truth) as f" +
+					"on article.article_id = f.article_id";
 			sql += "FROM article WHERE user_id = ?";
 
 			PreparedStatement stmt = connector.getStatement(sql);
@@ -75,7 +81,9 @@ public class ArticleDao {
 				String content = rs.getString("content");
 				String location = rs.getString("point");
 				String createAt = rs.getString("created_at");
-				list.add(new Article(articleId, userId, location, content, createAt,false));
+				boolean fav = rs.getBoolean("favorite");
+				int favCount = rs.getInt("fav_count");
+				list.add(new Article(articleId, userId, location, content, createAt,fav,favCount));
 			}
 
 			rs.close();

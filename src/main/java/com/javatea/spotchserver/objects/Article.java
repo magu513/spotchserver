@@ -26,6 +26,8 @@ public class Article {
 	private LocalDateTime createAt;
 	/** お気に入り判定 */
 	private boolean favorite;
+	/** お気に入り数 */
+	private int favCount;
 
 	/**
 	 * デフォルトコンストラクタ
@@ -45,7 +47,8 @@ public class Article {
 				   String location,
 				   String content,
 				   String createAt,
-				   boolean favorite) {
+				   boolean favorite,
+				   int favCount) {
 
 		this.postId = postId;
 		this.userId = userId;
@@ -59,6 +62,7 @@ public class Article {
 		this.content = content;
 		this.createAt = DateFormatter.stringToDateTime(createAt,"yyyy-MM-dd HH:mm:ss");
 		this.favorite = favorite;
+		this.favCount = favCount;
 	}
 
 	/**
@@ -187,5 +191,13 @@ public class Article {
 
 	public void setFavorite(boolean favorite) {
 		this.favorite = favorite;
+	}
+
+	public int getFavCount() {
+		return favCount;
+	}
+
+	public void setFavCount(int favCount) {
+		this.favCount = favCount;
 	}
 }
