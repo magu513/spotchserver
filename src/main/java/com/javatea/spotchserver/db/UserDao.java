@@ -26,7 +26,7 @@ public class UserDao {
 	public User find(long id) {
 		User user = null;
 		try {
-			String sql = "SELECT * FROM user where id = ?";
+			String sql = "SELECT * FROM users where id = ?";
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setLong(1,id);
 			ResultSet rs = stmt.executeQuery();
@@ -41,7 +41,7 @@ public class UserDao {
 	public User findWhereMail(String mail) {
 		User user = null;
 		try {
-			String sql = "SELECT * FROM user where email = ?";
+			String sql = "SELECT * FROM users where email = ?";
 			PreparedStatement stmt = connector.getStatement(sql);
 			stmt.setString(1,mail);
 			ResultSet rs = stmt.executeQuery();
