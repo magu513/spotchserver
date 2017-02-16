@@ -87,7 +87,7 @@ public class UserDao {
 	 * @return
 	 */
 	public User insert(User object) throws SQLException {
-		String sql = "INSERT INTO users (name,email,birthday,created_at) VALUES (?,?,?,?) returning id";
+		String sql = "INSERT INTO users (name,email,birthday,created_at,updated_at,status) VALUES (?,?,?,?,?,?) returning id";
 		long id = 0;
 		object.setCreateAt(LocalDateTime.now());
 		PreparedStatement ps = connector.getStatement(sql);
@@ -96,6 +96,8 @@ public class UserDao {
 		ps.setString(2, object.getEmail());
 		ps.setDate(3, Date.valueOf(object.getBirthDay()));
 		ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
+		ps.setTimestamp(5, Timestamp.valueOf(object.getCreateAt()));
+		ps.setShort(6,(short) 1);
 		ResultSet rs = ps.executeQuery();
 
 		while (rs.next()) {
