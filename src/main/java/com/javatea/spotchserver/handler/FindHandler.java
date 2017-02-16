@@ -57,7 +57,8 @@ public class FindHandler extends TextWebSocketHandler{
 		ObjectMapper mapper = new ObjectMapper();
 		FindMessage fm = mapper.readValue(message.getPayload(),FindMessage.class);
 		List<Article> articles = ac.read(fm.getLatitude(),fm.getLongitude(),fm.getRange());
-		articles.sort((a1,a2) -> Long.compare(a1.getUserId(),a2.getUserId()));
+		articles.sort((o1, o2) -> (int) (o1.getUserId() - o2.getUserId()));
+
 		String json = mapper.writeValueAsString(articles);
 		System.out.println(json);
 		session.sendMessage(new TextMessage(json));
