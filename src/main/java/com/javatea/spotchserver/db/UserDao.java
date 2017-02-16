@@ -142,8 +142,8 @@ public class UserDao {
 			String name = rs.getString("name");
 			String email = rs.getString("email");
 			LocalDate birthday = rs.getDate("birthday").toLocalDate();
-			LocalDateTime createAt = rs.getTimestamp("create_at").toLocalDateTime();
-			LocalDateTime updateAt = rs.getTimestamp("update_at").toLocalDateTime();
+			LocalDateTime createAt = rs.getTimestamp("created_at").toLocalDateTime();
+			LocalDateTime updateAt = rs.getTimestamp("updated_at").toLocalDateTime();
 			short status = rs.getShort("status");
 
 			user = new User(userId,name,email,birthday,createAt,updateAt,status);
