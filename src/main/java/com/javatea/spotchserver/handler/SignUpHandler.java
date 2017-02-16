@@ -1,7 +1,8 @@
-package com.javatea.spotchserver.controller;
+package com.javatea.spotchserver.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.javatea.spotchserver.db.DBConnector;
 import com.javatea.spotchserver.db.PassDao;
 import com.javatea.spotchserver.db.UserDao;
 import com.javatea.spotchserver.objects.SignUpUser;
@@ -16,12 +17,24 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * SignUpのハンドラクラス
+ */
 @Component
 public class SignUpHandler extends TextWebSocketHandler {
 	@Autowired
 	private UserDao ud;
 	@Autowired
 	private PassDao pd;
+	@Autowired
+	private DBConnector connector;
+
+	/**
+	 * 送信されてきたメッセージの内容を処理する
+	 * @param session
+	 * @param message
+	 * @throws Exception
+	 */
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
@@ -37,13 +50,15 @@ public class SignUpHandler extends TextWebSocketHandler {
 			pd.insert(user.getUserId(), passHash, salt);
 
 			json += "\"result\":" + true;
+			connector.commit();
 		} catch (SQLException e) {
+			connector.rollback();
 			json += "\"result\":" + false;
 		}
 
 		json += ",\"userId\":" + user.getUserId();
 		json += "}";
 
-		session.sendMessage(new TextMessage(json.getBytes()));
+		session.sendMessage(new TextMessage(json));
 	}
 }

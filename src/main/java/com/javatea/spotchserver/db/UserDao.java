@@ -28,19 +28,25 @@ public class UserDao {
 		try {
 			String sql = "SELECT * FROM user where id = ?";
 			PreparedStatement stmt = connector.getStatement(sql);
+			stmt.setLong(1,id);
 			ResultSet rs = stmt.executeQuery();
 
-			while (rs.next()) {
-				long userId = rs.getLong("id");
-				String name = rs.getString("name");
-				String mail = rs.getString("email");
-				LocalDate birthday = rs.getDate("birthday").toLocalDate();
-				LocalDateTime createAt = rs.getTimestamp("create_at").toLocalDateTime();
-				LocalDateTime updateAt = rs.getTimestamp("update_at").toLocalDateTime();
-				short status = rs.getShort("status");
+			user = getUserObj(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 
-				user = new User(userId,name,mail,birthday,createAt,updateAt,status);
-			}
+	public User findWhereMail(String mail) {
+		User user = null;
+		try {
+			String sql = "SELECT * FROM user where mail = ?";
+			PreparedStatement stmt = connector.getStatement(sql);
+			stmt.setString(1,mail);
+			ResultSet rs = stmt.executeQuery();
+
+			user = getUserObj(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -83,26 +89,19 @@ public class UserDao {
 	public User insert(User object) throws SQLException {
 		String sql = "INSERT INTO users (name,email,birthday,created_at) VALUES (?,?,?,?) returning id";
 		long id = 0;
-		try {
-			object.setCreateAt(LocalDateTime.now());
-			PreparedStatement ps = connector.getStatement(sql);
+		object.setCreateAt(LocalDateTime.now());
+		PreparedStatement ps = connector.getStatement(sql);
 
-			ps.setString(1, object.getUserName());
-			ps.setString(2, object.getEmail());
-			ps.setDate(3, Date.valueOf(object.getBirthDay()));
-			ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
-			ResultSet rs = ps.executeQuery();
+		ps.setString(1, object.getUserName());
+		ps.setString(2, object.getEmail());
+		ps.setDate(3, Date.valueOf(object.getBirthDay()));
+		ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
+		ResultSet rs = ps.executeQuery();
 
-			while (rs.next()) {
-				object.setUserId(rs.getLong("id"));
-			}
-			connector.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			connector.rollback();
-
-			throw new SQLException();
+		while (rs.next()) {
+			object.setUserId(rs.getLong("id"));
 		}
+		connector.commit();
 
 		return object;
 	}
@@ -134,5 +133,21 @@ public class UserDao {
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	private User getUserObj(ResultSet rs) throws SQLException {
+		User user = null;
+		while (rs.next()) {
+			long userId = rs.getLong("id");
+			String name = rs.getString("name");
+			String email = rs.getString("email");
+			LocalDate birthday = rs.getDate("birthday").toLocalDate();
+			LocalDateTime createAt = rs.getTimestamp("create_at").toLocalDateTime();
+			LocalDateTime updateAt = rs.getTimestamp("update_at").toLocalDateTime();
+			short status = rs.getShort("status");
+
+			user = new User(userId,name,email,birthday,createAt,updateAt,status);
+		}
+		return user;
 	}
 }

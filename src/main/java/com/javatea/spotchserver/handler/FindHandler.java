@@ -1,7 +1,7 @@
-package com.javatea.spotchserver.controller;
+package com.javatea.spotchserver.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javatea.spotchserver.objects.Article;
+import com.javatea.spotchserver.controller.ArticleController;
 import com.javatea.spotchserver.objects.websocket.FindMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,6 +59,6 @@ public class FindHandler extends TextWebSocketHandler{
 		List articles = ac.read(fm.getLatitude(),fm.getLongitude(),fm.getRange());
 		String json = mapper.writeValueAsString(articles);
 		System.out.println(json);
-		session.sendMessage(new TextMessage(json.getBytes()));
+		session.sendMessage(new TextMessage(json));
 	}
 }

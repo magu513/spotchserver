@@ -73,7 +73,7 @@ public class DBConnector {
 	 * DBのコミットを行う
 	 * @throws SQLException
 	 */
-	void commit() throws SQLException {
+	public void commit() throws SQLException {
 		conn.commit();
 	}
 
@@ -81,7 +81,7 @@ public class DBConnector {
 	 * DBのロールバックを行う
 	 * @throws SQLException
 	 */
-	void rollback() throws SQLException {
+	public void rollback() throws SQLException {
 		conn.rollback();
 	}
 }
