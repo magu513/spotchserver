@@ -21,7 +21,7 @@ public class User {
 	/** 生年月日 */
 	@JsonProperty("birthday")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate birthDay;
+	private LocalDateTime birthDay;
 	/** 登録(作成)日 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createAt;
@@ -53,7 +53,7 @@ public class User {
 				String birthDay) {
 		this.userName = userName;
 		this.email = email;
-		this.birthDay = DateFormatter.stringToDate(birthDay);
+		this.birthDay = DateFormatter.stringToDateTime(birthDay);
 		this.status = 2;
 	}
 
@@ -68,7 +68,7 @@ public class User {
 	public User(long userId,
 				String userName,
 				String email,
-				LocalDate birthDay,
+				LocalDateTime birthDay,
 				LocalDateTime createAt,
 				LocalDateTime updateAt,
 				short status) {
@@ -133,7 +133,7 @@ public class User {
 	 * 生年月日の取得
 	 * @return 生年月日
 	 */
-	public LocalDate getBirthDay() {
+	public LocalDateTime getBirthDay() {
 		return birthDay;
 	}
 
@@ -141,7 +141,7 @@ public class User {
 	 * 生年月日の設定
 	 * @param birthDay
 	 */
-	public void setBirthDay(LocalDate birthDay) {
+	public void setBirthDay(LocalDateTime birthDay) {
 		this.birthDay = birthDay;
 	}
 

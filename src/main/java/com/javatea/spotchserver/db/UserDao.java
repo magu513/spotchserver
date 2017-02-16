@@ -68,7 +68,7 @@ public class UserDao {
 				long id = rs.getLong("id");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
-				LocalDate birthday = rs.getDate("birthday").toLocalDate();
+				LocalDateTime birthday = rs.getTimestamp("birthday").toLocalDateTime();
 				LocalDateTime createAt = rs.getTimestamp("created_at").toLocalDateTime();
 				LocalDateTime updateAt = rs.getTimestamp("updated_at").toLocalDateTime();
 				short status = rs.getShort("status");
@@ -94,7 +94,7 @@ public class UserDao {
 
 		ps.setString(1, object.getUserName());
 		ps.setString(2, object.getEmail());
-		ps.setDate(3, Date.valueOf(object.getBirthDay()));
+		ps.setDate(3, Date.valueOf(object.getBirthDay().toLocalDate()));
 		ps.setTimestamp(4, Timestamp.valueOf(object.getCreateAt()));
 		ps.setTimestamp(5, Timestamp.valueOf(object.getCreateAt()));
 		ps.setShort(6,(short) 1);
@@ -119,7 +119,7 @@ public class UserDao {
 			PreparedStatement ps = connector.getStatement(sql);
 			ps.setString(1,user.getUserName());
 			ps.setString(2,user.getEmail());
-			ps.setDate(3, Date.valueOf(user.getBirthDay()));
+			ps.setDate(3, Date.valueOf(user.getBirthDay().toLocalDate()));
 			ps.setTimestamp(4, Timestamp.valueOf(user.getCreateAt()));
 			ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
 			ps.setShort(6,user.getStatus());
@@ -143,7 +143,7 @@ public class UserDao {
 			long userId = rs.getLong("id");
 			String name = rs.getString("name");
 			String email = rs.getString("email");
-			LocalDate birthday = rs.getDate("birthday").toLocalDate();
+			LocalDateTime birthday = rs.getTimestamp("birthday").toLocalDateTime();
 			LocalDateTime createAt = rs.getTimestamp("created_at").toLocalDateTime();
 			LocalDateTime updateAt = rs.getTimestamp("updated_at").toLocalDateTime();
 			short status = rs.getShort("status");
