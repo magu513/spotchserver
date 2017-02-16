@@ -143,8 +143,9 @@ public class User {
 	 * 作成日の取得
 	 * @return 作成日
 	 */
-	public LocalDateTime getCreateAt() {
-		return createAt;
+	public String getCreateAt() {
+//		return createAt;
+		return DateFormatter.dateTimeToString(createAt);
 	}
 
 	/**
