@@ -20,7 +20,7 @@ public class User {
 	private String email;
 	/** 生年月日 */
 	@JsonProperty("birthday")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime birthDay;
 	/** 登録(作成)日 */
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
