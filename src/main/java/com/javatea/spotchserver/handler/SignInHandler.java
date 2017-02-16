@@ -24,7 +24,7 @@ public class SignInHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		SignInMessage m = mapper.readValue(message.getPayload(),SignInMessage.class);
-		User user = ud.findWhereMail(m.getMail());
+		User user = ud.findWhereMail(m.getEmail());
 		Password password = pd.find(user.getUserId());
 		String pass = Hash.getPassHash(m.getPassword(),password.getSalt());
 
