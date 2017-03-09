@@ -19,7 +19,7 @@ public class PreUserDao {
 
 	/**
 	 * 仮登録ユーザのinsertを実行する
-	 * @param p
+	 * @param p 仮登録ユーザインスタンス
 	 */
 	public void insert(PreUser p) {
 		String sql = "INSERT INTO preuser VALUES (?,?,?)";
@@ -42,8 +42,8 @@ public class PreUserDao {
 
 	/**
 	 * 仮登録用のアクセストークンを元にユーザを検索する
-	 * @param token
-	 * @return
+	 * @param token アクセストークン
+	 * @return ユーザーID
 	 */
 	public long find(String token) {
 		String sql = "SELECT user_id FROM preuser where token = ?";
@@ -64,7 +64,7 @@ public class PreUserDao {
 
 	/**
 	 * 本登録の実行もしくは、有効期限が切れたユーザを削除する
-	 * @param userId
+	 * @param userId ユーザーID
 	 */
 	public void delete(long userId) {
 		String sql = "DELETE FROM preuser where user_id = ?";

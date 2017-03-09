@@ -31,9 +31,9 @@ public class SignUpHandler extends TextWebSocketHandler {
 
 	/**
 	 * 送信されてきたメッセージの内容を処理する
-	 * @param session
-	 * @param message
-	 * @throws Exception
+	 * @param session セッション
+	 * @param message ユーザー情報の入ったTextMessageインスタンス
+	 * @throws Exception ロールバックに失敗した場合に発生する例外
 	 */
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {

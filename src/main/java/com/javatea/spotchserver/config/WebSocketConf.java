@@ -15,19 +15,25 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 public class WebSocketConf implements WebSocketConfigurer {
+	/** 検索の接続処理のハンドラ */
 	@Autowired
 	private FindHandler findHandler;
+	/** 投稿の生成処理のハンドラ */
 	@Autowired
 	private CreateHandler createHandler;
+	/** ユーザー登録処理のンドラ */
 	@Autowired
 	private SignUpHandler signUpHandler;
+	/** ログイン処理のハンドラ*/
 	@Autowired
 	private SignInHandler signInHandler;
+	/** お気に入り登録のハンドラ*/
 	@Autowired
 	private FavoriteHandler favoriteHandler;
+
 	/**
 	 * ハンドラの登録を行う
-	 * @param registry
+	 * @param registry websockethandlerregistry
 	 */
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

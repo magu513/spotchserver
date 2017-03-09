@@ -46,9 +46,9 @@ public class DBConnector {
 
 	/**
 	 * ConnectionからPreparedStatementオブジェクトを取得する
-	 * @param sql
-	 * @return
-	 * @throws SQLException
+	 * @param sql SQL文
+	 * @return SQL文を設定したPreparedStatement型インスタンス
+	 * @throws SQLException インスタンスの生成に失敗した場合に発生する例外
 	 */
 	PreparedStatement getStatement(String sql) throws SQLException {
 		return conn.prepareStatement(sql);
@@ -71,7 +71,7 @@ public class DBConnector {
 
 	/**
 	 * DBのコミットを行う
-	 * @throws SQLException
+	 * @throws SQLException コミットに失敗した場合に発生する例外
 	 */
 	public void commit() throws SQLException {
 		conn.commit();
@@ -79,7 +79,7 @@ public class DBConnector {
 
 	/**
 	 * DBのロールバックを行う
-	 * @throws SQLException
+	 * @throws SQLException ロールバックに失敗した場合に発生する例外
 	 */
 	public void rollback() throws SQLException {
 		conn.rollback();

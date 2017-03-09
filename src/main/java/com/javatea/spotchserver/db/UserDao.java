@@ -20,8 +20,8 @@ public class UserDao {
 
 	/**
 	 * ユーザ情報を取得するクラス
-	 * @param id
-	 * @return
+	 * @param id ユーザーID
+	 * @return 該当するユーザーのインスタンス
 	 */
 	public User find(long id) {
 		User user = null;
@@ -38,6 +38,11 @@ public class UserDao {
 		return user;
 	}
 
+	/**
+	 * メールアドレスからユーザーを検索する
+	 * @param mail メールアドレス
+	 * @return 該当するユーザーのインスタンス
+	 */
 	public User findWhereMail(String mail) {
 		User user = null;
 		try {
@@ -55,7 +60,7 @@ public class UserDao {
 
 	/**
 	 * 全ユーザ情報を取得する
-	 * @return
+	 * @return ユーザインスタンスが入ったList
 	 */
 	public List<User> findAll() {
 		List<User> list = new ArrayList<>();
@@ -83,8 +88,9 @@ public class UserDao {
 
 	/**
 	 * ユーザ情報を登録する
-	 * @param object
-	 * @return
+	 * @param object 登録するユーザのインスタンス
+	 * @return ユーザIDを付与したユーザインスタンス
+	 * @throws SQLException 登録に失敗した場合に発生する例外
 	 */
 	public User insert(User object) throws SQLException {
 		String sql = "INSERT INTO users (name,email,birthday,created_at,updated_at,status) VALUES (?,?,?,?,?,?) returning id";
@@ -110,7 +116,7 @@ public class UserDao {
 
 	/**
 	 * User情報を更新するクラス
-	 * @param user
+	 * @param user ユーザー情報を変更済みのユーザインスタンス
 	 */
 	public void update(User user){
 		/* TODO 更新処理 */
@@ -137,6 +143,12 @@ public class UserDao {
 		}
 	}
 
+	/**
+	 * ResultSetからユーザー情報を取得する
+	 * @param rs DBへの問い合わせの結果
+	 * @return Userインスタンス
+	 * @throws SQLException 処理に失敗した場合に発生する例外
+	 */
 	private User getUserObj(ResultSet rs) throws SQLException {
 		User user = null;
 		while (rs.next()) {

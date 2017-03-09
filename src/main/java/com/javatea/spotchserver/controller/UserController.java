@@ -36,10 +36,11 @@ public class UserController {
 
 	/**
 	 * 仮登録処理
-	 * @param username
-	 * @param email
-	 * @param birthday
-	 * @param password
+	 * @param username ユーザー名
+	 * @param email メールアドレス
+	 * @param birthday 誕生日
+	 * @param password パスワード
+	 * @throws SQLException DBの処理に失敗した場合に発生する例外
 	 */
 	@RequestMapping(value = "/signon",method = RequestMethod.POST)
 	public void signon(@RequestParam String username,
@@ -64,7 +65,8 @@ public class UserController {
 
 	/**
 	 * 本登録処理
-	 * @param token
+	 * @param token 本登録用トークン
+	 * @return セッション情報を返す
 	 */
 	@RequestMapping("/signon/{token}")
 	public String singon(@PathVariable String token) {
@@ -81,9 +83,9 @@ public class UserController {
 		return "";
 	}
 
-	@RequestMapping("/signin")
-	public void signin(@RequestParam String email,
-					   @RequestParam String password) {
+//	@RequestMapping("/signin")
+//	public void signin(@RequestParam String email,
+//					   @RequestParam String password) {
 //		User u = ud.find(email);
-	}
+//	}
 }

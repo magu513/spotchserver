@@ -16,6 +16,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
  */
 @Component
 public class CreateHandler extends TextWebSocketHandler{
+	/** HTTP通信で用いる投稿処理クラス */
 	@Autowired
 	private ArticleController ac;
 

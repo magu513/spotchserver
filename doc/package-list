@@ -1,0 +1,8 @@
+com.javatea.spotchserver
+com.javatea.spotchserver.config
+com.javatea.spotchserver.controller
+com.javatea.spotchserver.db
+com.javatea.spotchserver.handler
+com.javatea.spotchserver.objects
+com.javatea.spotchserver.objects.websocket
+com.javatea.spotchserver.opt

@@ -20,8 +20,8 @@ public class Hash {
 
 	/**
 	 * パスワードのHash化の際に利用する
-	 * @param pass
-	 * @param salt
+	 * @param pass パスワード
+	 * @param salt ソルト
 	 * @return Hash化後の文字列
 	 */
 	public static String getPassHash(String pass,String salt) {
@@ -35,10 +35,7 @@ public class Hash {
 		try {
 			skf = SecretKeyFactory.getInstance(ALGORITHM);
 			secretKey = skf.generateSecret(keySpec);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			/*なんか処理を書く*/
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
 		byte[] passByteAry = secretKey.getEncoded();
@@ -50,8 +47,8 @@ public class Hash {
 
 	/**
 	 * 文字列をHash化する
-	 * @param target
-	 * @return
+	 * @param target Hash化する文字列
+	 * @return Hash化の結果
 	 */
 	private static byte[] getHash(String target) {
 		MessageDigest msgd;
@@ -68,7 +65,7 @@ public class Hash {
 
 	/**
 	 * 文字列をHash化した結果を文字列で取得する
-	 * @param target
+	 * @param target Hash化する文字列
 	 * @return Hash化後の文字列
 	 */
 	public static String getHashStr(String target) {
@@ -79,8 +76,8 @@ public class Hash {
 
 	/**
 	 * byte型配列を16進数表記の文字列に変換して返す
-	 * @param bytes
-	 * @return
+	 * @param bytes Hash化済みのバイトコード
+	 * @return bytesを文字列化した結果
 	 */
 	private static String convertByteAryToString(byte[] bytes) {
 		StringBuilder sb = new StringBuilder(2 * bytes.length);

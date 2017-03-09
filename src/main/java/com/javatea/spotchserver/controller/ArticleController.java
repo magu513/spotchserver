@@ -20,10 +20,10 @@ public class ArticleController {
 
 	/**
 	 * ユーザの周囲の情報を取得する
-	 * @param latitude
-	 * @param longitude
-	 * @param range
-	 * @return
+	 * @param latitude 緯度
+	 * @param longitude 経度
+	 * @param range 取得する範囲
+	 * @return 投稿が入ったList
 	 */
 	@RequestMapping(value = "/articles", method = RequestMethod.GET)
 	public List<Article> read(@RequestParam double latitude,
@@ -34,11 +34,11 @@ public class ArticleController {
 
 	/**
 	 * 新規投稿を行う
-	 * @param id
-	 * @param content
-	 * @param latitude
-	 * @param longitude
-	 * @return
+	 * @param id　ユーザーID
+	 * @param content 投稿内容
+	 * @param latitude 緯度
+	 * @param longitude 経度
+	 * @return 登録の成否
 	 */
 	@RequestMapping(value = "/articles", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public ResponseEntity create(@RequestParam long id,
@@ -64,8 +64,8 @@ public class ArticleController {
 
 	/**
 	 * 投稿を削除する
-	 * @param id
-	 * @return
+	 * @param id 投稿ID
+	 * @return 削除の成否
 	 */
 	@RequestMapping(value = "/articles/{id}",method = RequestMethod.DELETE)
 	public ResponseEntity delete(@PathVariable long id) {

@@ -16,8 +16,8 @@ public class MailSend {
 
 	/**
 	 * メールを送信する
-	 * @param address
-	 * @param link
+	 * @param address メールアドレス
+	 * @param link 本登録に用いる一意な文字列
 	 */
 	@Async
 	public void send(String address,String link) {

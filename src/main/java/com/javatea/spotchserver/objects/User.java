@@ -44,9 +44,9 @@ public class User {
 
 	/**
 	 * 仮登録時に呼ばれる
-	 * @param userName
-	 * @param email
-	 * @param birthDay
+	 * @param userName ユーザー名
+	 * @param email メールアドレス
+	 * @param birthDay 生年月日
 	 */
 	public User(String userName,
 				String email,
@@ -59,11 +59,13 @@ public class User {
 
 	/**
 	 * データを設定する
-	 * @param userId
-	 * @param userName
-	 * @param email
-	 * @param birthDay
-	 * @param createAt
+	 * @param userId ユーザーID
+	 * @param userName ユーザー名
+	 * @param email メールアドレス
+	 * @param birthDay 生年月日
+	 * @param createAt 登録日
+	 * @param updateAt 更新日
+	 * @param status ユーザのステータス
 	 */
 	public User(long userId,
 				String userName,
@@ -91,7 +93,7 @@ public class User {
 
 	/**
 	 * 投稿者IDの設定
-	 * @param userId
+	 * @param userId ユーザーID
 	 */
 	public void setUserId(long userId) {
 		this.userId = userId;
@@ -107,7 +109,7 @@ public class User {
 
 	/**
 	 * 投稿者名の設定
-	 * @param userName
+	 * @param userName　ユーザー名
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -115,7 +117,7 @@ public class User {
 
 	/**
 	 * メールアドレスの取得
-	 * @return
+	 * @return メールアドレス
 	 */
 	public String getEmail() {
 		return email;
@@ -123,7 +125,7 @@ public class User {
 
 	/**
 	 * メールアドレスの設定
-	 * @param email
+	 * @param email メールアドレス
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -139,7 +141,7 @@ public class User {
 
 	/**
 	 * 生年月日の設定
-	 * @param birthDay
+	 * @param birthDay 生年月日
 	 */
 	public void setBirthDay(LocalDateTime birthDay) {
 		this.birthDay = birthDay;
@@ -156,7 +158,7 @@ public class User {
 
 	/**
 	 * 作成日の設定
-	 * @param createAt
+	 * @param createAt 作成日
 	 */
 	public void setCreateAt(LocalDateTime createAt) {
 		this.createAt = createAt;
@@ -164,7 +166,7 @@ public class User {
 
 	/**
 	 * ステータスの取得
-	 * @return
+	 * @return ステータス
 	 */
 	public short getStatus() {
 		return status;
@@ -172,7 +174,7 @@ public class User {
 
 	/**
 	 * ステータスの設定
-	 * @param status
+	 * @param status ステータス
 	 */
 	public void setStatus(short status) {
 		this.status = status;
@@ -180,7 +182,7 @@ public class User {
 
 	/**
 	 * 更新日時の取得
-	 * @return
+	 * @return 更新日時
 	 */
 	public LocalDateTime getUpdateAt() {
 		return updateAt;
@@ -188,7 +190,7 @@ public class User {
 
 	/**
 	 * 投稿日時の設定
-	 * @param updateAt
+	 * @param updateAt 更新日時
 	 */
 	public void setUpdateAt(LocalDateTime updateAt) {
 		this.updateAt = updateAt;

@@ -18,10 +18,10 @@ public class ArticleDao {
 
 	/**
 	 * ユーザーの周囲の投稿を取得する
-	 * @param x
-	 * @param y
-	 * @param range
-	 * @return
+	 * @param x 緯度
+	 * @param y 経度
+	 * @param range 範囲
+	 * @return 投稿の入ったList
 	 */
 	public List<Article> findArticleAroundMe(double x,
 											 double y,
@@ -61,8 +61,8 @@ public class ArticleDao {
 
 	/**
 	 * 指定したユーザーの投稿を取得する
-	 * @param userId
-	 * @return
+	 * @param userId ユーザーID
+	 * @return 該当ユーザーの投稿を返す
 	 */
 	public List<Article> findByUserId(long userId) {
 		List<Article> list = new ArrayList<>();
@@ -100,8 +100,8 @@ public class ArticleDao {
 
 	/**
 	 * 指定した投稿を削除する
-	 * @param id
-	 * @throws SQLException
+	 * @param id 投稿ID
+	 * @throws SQLException SQLの実行に失敗した場合に出る例外
 	 */
 	public void delete(long id) throws SQLException {
 		String sql = "DELETE FROM article where article_id = ?";
@@ -125,8 +125,8 @@ public class ArticleDao {
 
 	/**
 	 * 投稿を新規登録する
-	 * @param object
-	 * @throws SQLException
+	 * @param object 新規投稿のインスタンス
+	 * @throws SQLException 登録に失敗した場合に発生する例外
 	 */
 	public void insert(Article object) throws SQLException {
 		String sql = "INSERT INTO article(user_id,content,point,created_at) ";
